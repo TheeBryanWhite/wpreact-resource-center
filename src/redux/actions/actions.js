@@ -48,8 +48,6 @@ import { wpApi } from "../../api/wordpress";
 export const getPosts = filterQs => {
 	return dispatch => {
 
-		console.log(filterQs);
-
 		const apiUrl = wpApi.listPosts;
 
 		// Actually get the posts
@@ -141,30 +139,30 @@ const getTaxResourceTypeFailure = error => ({
 
 export const getTaxSolution = () => {
 	return dispatch => {
-		dispatch(getTaxSolutionStarted());
+		dispatch(getTaxSolutionsStarted());
 
 		const apiUrl = wpApi.taxSolution;
 
 		axios.get(`${apiUrl}`)
 			.then(response => {
-				dispatch(getTaxSolutionSuccess(response.data))
+				dispatch(getTaxSolutionsSuccess(response.data))
 			})
 			.catch(error => {
-				dispatch(getTaxSolutionFailure(error.message))
+				dispatch(getTaxSolutionsFailure(error.message))
 			});
 	}
 }
 
-const getTaxSolutionStarted = () => ({
+const getTaxSolutionsStarted = () => ({
 	type: GET_SOLUTIONS_STARTED
 });
 
-const getTaxSolutionSuccess = tax => ({
+const getTaxSolutionsSuccess = tax => ({
 	type: GET_SOLUTIONS_SUCCESS,
 	payload: { ...tax }
 });
 
-const getTaxSolutionFailure = error => ({
+const getTaxSolutionsFailure = error => ({
 	type: GET_SOLUTIONS_FAILURE,
 	payload: { error }
 });

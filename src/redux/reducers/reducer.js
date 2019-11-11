@@ -45,7 +45,7 @@ const initialState = {
 	termsSolution: [],
 	termsResourceType: [],
 	taxIndustry: [],
-	taxSolution: [],
+	taxSolutions: [],
 	taxResourceType: []
 };
 
@@ -167,7 +167,7 @@ function rootReducer(state = initialState, action) {
 				...state,
 				solutionsTaxLoading: false,
 				solutionsTaxError: null,
-				taxSolution: action.payload
+				taxSolutions: action.payload
 	        }
 
 	    case GET_INDUSTRY_TERMS_FAILURE:

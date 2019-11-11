@@ -161,6 +161,8 @@ class ConnectedResourceList extends Component {
             return "Loading...";
         }
 
+        console.log(this.props);
+
     	return(
             <div className="resource-center-container">
                 <Filter taxonomy={taxIndustry} terms={termsIndustry} />
