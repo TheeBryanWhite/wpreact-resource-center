@@ -1,11 +1,53 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import {
+    getPostsFailure,
+    getPostsSuccess,
+    getPostsStarted
+} from '../redux/reducers/reducer';
+import { 
+    getPosts
+} from "../redux/actions/actions";
 
-class Posts extends Component {
+const mapStateToProps = state => ({
+    postsError: getPostsFailure(state),
+    postsLoading: getPostsStarted(state),
+    posts: getPostsSuccess(state)
+});
 
-    constructor() {
-        super();
+const mapDispatchToProps = { 
+    getPosts
+}
+
+class ConnectedPosts extends Component {
+
+    constructor(props) {
+        super(props);
 
         this.createMarkup = this.createMarkup.bind(this);
+        this.shouldComponentRender = this.shouldComponentRender.bind(this);
+    }
+
+    componentDidMount() {
+        const { 
+            getPosts,
+        } = this.props;
+
+
+        getPosts();
+    }
+
+    shouldComponentRender() {
+
+        const { 
+            postsLoading,
+        } = this.props;
+        
+        if (postsLoading === false) {
+            return false;
+        }
+
+        return true;
     }
 
     // Some of the API data from WordPress renders as text, tags and all
@@ -16,10 +58,17 @@ class Posts extends Component {
 
 	render() {
         const postsData = [];
-		const posts = this.props.posts;
+
+        const { 
+            posts
+         } = this.props;
 
         for (var key in posts) {
             postsData.push(posts[key]);
+        }
+
+        if (this.shouldComponentRender()) {
+            return "Loading...";
         }
 
 		return(
@@ -40,5 +89,10 @@ class Posts extends Component {
 	}
 
 }
+
+const Posts = connect(
+    mapStateToProps, 
+    mapDispatchToProps
+)(ConnectedPosts);
 
 export default Posts;

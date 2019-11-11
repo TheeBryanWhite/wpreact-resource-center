@@ -53,7 +53,7 @@ class ConnectedFilter extends Component {
     	// Run the filter query string format function only after the props have updated
 		filterUpdatePromise.then(() => {
 			const filterQs = this.formatNewFilterQuery();
-			getPosts(filterQs);
+			this.props.getPosts(filterQs);
 		});
     }
 
