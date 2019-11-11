@@ -47,8 +47,11 @@ import { wpApi } from "../../api/wordpress";
 **/
 export const getPosts = filterQs => {
 	return dispatch => {
-
 		const apiUrl = wpApi.listPosts;
+
+		if (filterQs) {
+			apiUrl += "?" + filterQs;
+		}
 
 		// Actually get the posts
 		dispatch(getPostsStarted());

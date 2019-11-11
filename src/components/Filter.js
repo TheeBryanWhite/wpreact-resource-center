@@ -18,10 +18,12 @@ const mapStateToProps = state => ({
     posts: getPostsSuccess(state),
 })
 
-const mapDispatchToProps = {
-	filterUpdate,
-	getPosts
-}
+const mapDispatchToProps = dispatch => {
+    return {
+        filterUpdate: (params) => dispatch(filterUpdate(params)),
+        getPosts: (filters) => dispatch(getPosts(filters))
+    }
+};
 
 class ConnectedFilter extends Component {
 
