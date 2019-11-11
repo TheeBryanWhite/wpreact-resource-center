@@ -45,8 +45,10 @@ import { wpApi } from "../../api/wordpress";
 /* constants file and include them in the imports block above
 /* 
 **/
-export const getPosts = () => {
+export const getPosts = filterQs => {
 	return dispatch => {
+
+		console.log(filterQs);
 
 		const apiUrl = wpApi.listPosts;
 
