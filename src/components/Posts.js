@@ -71,6 +71,10 @@ class ConnectedPosts extends Component {
             return "Loading...";
         }
 
+        if (postsData.length === 0) {
+            return "There are no posts";
+        }
+
 		return(
 			<div className="posts-container">
                 {postsData.map(el => (
