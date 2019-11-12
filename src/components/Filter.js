@@ -98,7 +98,7 @@ class ConnectedFilter extends Component {
     	// Convert this array data to a serialized string
     	filterQueryString = filterModel.map(currData => {
     		let filters = '';
-    		filters = filters += "filter[" + currData.taxonomy + "]=" + currData.terms;
+    		filters = filters += currData.taxonomy + "=" + currData.terms;
 
     		return filters;
     	});
