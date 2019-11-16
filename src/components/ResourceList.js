@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import Filter from './Filter';
 import Posts from './Posts';
+import Pagination from './Pagination';
 import {
     getTaxIndustryFailure, 
     getTaxIndustrySuccess, 
@@ -21,7 +22,6 @@ import {
     getTermsSolutionsFailure, 
     getTermsSolutionsSuccess, 
     getTermsSolutionsStarted,
-    totalPosts
 } from '../redux/reducers/reducer';
 import { 
     getPosts,
@@ -32,8 +32,6 @@ import {
     getTermsResourceType,
     getTermsSolution
 } from "../redux/actions/actions";
-import { postQuerySettings } from "../api/wordpress";
-import ReactPaginate from 'react-paginate';
 
 // Update the mapStateToProps object with state data for each set of queried data you pull down from WordPress
 const mapStateToProps = state => ({
@@ -54,8 +52,7 @@ const mapStateToProps = state => ({
     termsResourceType: getTermsResourceTypeSuccess(state),
     termsSolutionsError: getTermsSolutionsFailure(state),
     termsSolutionsLoading: getTermsSolutionsStarted(state),
-    termsSolutions: getTermsSolutionsSuccess(state),
-    totalPosts: totalPosts(state)
+    termsSolutions: getTermsSolutionsSuccess(state)
 });
 
 const mapDispatchToProps = {
@@ -69,12 +66,6 @@ const mapDispatchToProps = {
 }
 
 class ConnectedResourceList extends Component {
-
-    constructor(props) {
-      super(props);
-    
-      this.clickHandler = this.clickHandler.bind(this);
-    }
 
     componentDidMount() {
         const { 
@@ -94,13 +85,6 @@ class ConnectedResourceList extends Component {
         getTermsSolution();
     }
 
-    clickHandler = event => {
-        const { getPosts } = this.props;
-        let selected = event.selected + 1;
-
-        getPosts(selected);
-    }
-
     render() {
 
         const { 
@@ -109,8 +93,7 @@ class ConnectedResourceList extends Component {
             taxSolutions,
             termsIndustry,
             termsResourceType,
-            termsSolutions,
-            totalPosts
+            termsSolutions
          } = this.props;
 
         // Add elements to this as needed but keep .react-enclosure and the components as they are essential
@@ -124,15 +107,7 @@ class ConnectedResourceList extends Component {
 
                 <Posts />
 
-                <ReactPaginate 
-                    activeClassName={'active'}
-                    containerClassName={'pagination'}
-                    marginPagesDisplayed={postQuerySettings.marginDisplayed}
-                    onPageChange={this.clickHandler}
-                    PageCount={postQuerySettings.totalPosts}
-                    pageRangeDisplayed={postQuerySettings.rangeDisplayed}
-                    subContainerClassName={'pages pagination'}
-                />
+                <Pagination />
             </div>
     	)
     }
