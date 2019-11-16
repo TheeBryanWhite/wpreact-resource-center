@@ -26,34 +26,34 @@ import {
 	GET_SOLUTIONS_TERMS_SUCCESS
 } from "../../constants/constants";
 import { 
-	perPage,
+	postQuerySettings,
 	wpApi 
 } from "../../api/wordpress";
 
 /**
-/* We run our actions in threes from a core action function
-/*
-/* Each function starts with the 'started' action and sets the state's loading property to 'true'
-/* If the API call is successful, it fires the success action and passes the response data to the store
-/* If not, the state is updated with the API error message
-/* In both cases, the state's loading prop is updated to 'false'
-/*
-/* You can update the front end with different views depending on the outcome of the state
-/*
-/* You'll likely never have to deviate from this format, so copy the core GET_POSTS_FAILURE,
-/* GET_POSTS_STARTED, GET_POSTS_SUCCESS, rename them appropriately for your action and update vars
-/* like apiUrl and the success action parameter to whatever data you're querying
-/*
-/* For each new action set you create, don't forget to also create the constants for them in the 
-/* constants file and include them in the imports block above
-/* 
+* We run our actions in threes from a core action function
+*
+* Each function starts with the 'started' action and sets the state's loading property to 'true'
+* If the API call is successful, it fires the success action and passes the response data to the store
+* If not, the state is updated with the API error message
+* In both cases, the state's loading prop is updated to 'false'
+*
+* You can update the front end with different views depending on the outcome of the state
+*
+* You'll likely never have to deviate from this format, so copy the core GET_POSTS_FAILURE,
+* GET_POSTS_STARTED, GET_POSTS_SUCCESS, rename them appropriately for your action and update vars
+* like apiUrl and the success action parameter to whatever data you're querying
+*
+* For each new action set you create, don't forget to also create the constants for them in the 
+* constants file and include them in the imports block above
+* 
 **/
 
 // WP limits how many posts it serves from the API, so we have to get sneaky in order to get all of them
 // First, find out how many pages of post there are
 export const getPosts = (pageNum = "1", filterQs) => {
 	return dispatch => {
-		let apiUrl = wpApi.listPosts + "&per_page=" + perPage + "&page=" + pageNum;
+		let apiUrl = wpApi.listPosts + "&per_page=" + postQuerySettings.perPage + "&page=" + pageNum;
 
 		if (filterQs) {
 			apiUrl += "&" + filterQs;

@@ -25,15 +25,15 @@ import {
 } from "../../constants/constants";
 
 /**
-/* For each action, you're going to need to add a reducer
-/*
-/* For most of your list post and list taxonomy queries, the reducers
-/* for the GET_POSTS series ought to do the trick. So you can probably
-/* get away with copying and pasting the GET_POSTS series and updating the 
-/* posts property with whatever name is appropriate for the data you're 
-/* updating the state with
-/*
-/* Don't forget to update the constants in the import block above
+* For each action, you're going to need to add a reducer
+*
+* For most of your list post and list taxonomy queries, the reducers
+* for the GET_POSTS series ought to do the trick. So you can probably
+* get away with copying and pasting the GET_POSTS series and updating the 
+* posts property with whatever name is appropriate for the data you're 
+* updating the state with
+*
+* Don't forget to update the constants in the import block above
 **/
 
 const initialState = {

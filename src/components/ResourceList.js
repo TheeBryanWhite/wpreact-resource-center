@@ -32,6 +32,7 @@ import {
     getTermsResourceType,
     getTermsSolution
 } from "../redux/actions/actions";
+import { postQuerySettings } from "../api/wordpress";
 import ReactPaginate from 'react-paginate';
 
 // Update the mapStateToProps object with state data for each set of queried data you pull down from WordPress
@@ -126,10 +127,10 @@ class ConnectedResourceList extends Component {
                 <ReactPaginate 
                     activeClassName={'active'}
                     containerClassName={'pagination'}
-                    marginPagesDisplayed={1}
+                    marginPagesDisplayed={postQuerySettings.marginDisplayed}
                     onPageChange={this.clickHandler}
-                    PageCount={totalPosts}
-                    pageRangeDisplayed={4}
+                    PageCount={postQuerySettings.totalPosts}
+                    pageRangeDisplayed={postQuerySettings.rangeDisplayed}
                     subContainerClassName={'pages pagination'}
                 />
             </div>
