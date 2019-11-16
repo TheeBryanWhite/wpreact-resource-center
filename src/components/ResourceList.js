@@ -20,9 +20,11 @@ import {
     getTermsResourceTypeStarted,
     getTermsSolutionsFailure, 
     getTermsSolutionsSuccess, 
-    getTermsSolutionsStarted
+    getTermsSolutionsStarted,
+    totalPosts
 } from '../redux/reducers/reducer';
 import { 
+    getPosts,
     getTaxIndustry,
     getTaxResourceType,
     getTaxSolution,
@@ -30,6 +32,7 @@ import {
     getTermsResourceType,
     getTermsSolution
 } from "../redux/actions/actions";
+import ReactPaginate from 'react-paginate';
 
 // Update the mapStateToProps object with state data for each set of queried data you pull down from WordPress
 const mapStateToProps = state => ({
@@ -50,10 +53,12 @@ const mapStateToProps = state => ({
     termsResourceType: getTermsResourceTypeSuccess(state),
     termsSolutionsError: getTermsSolutionsFailure(state),
     termsSolutionsLoading: getTermsSolutionsStarted(state),
-    termsSolutions: getTermsSolutionsSuccess(state)
+    termsSolutions: getTermsSolutionsSuccess(state),
+    totalPosts: totalPosts(state)
 });
 
-const mapDispatchToProps = { 
+const mapDispatchToProps = {
+    getPosts,
     getTaxIndustry,
     getTaxResourceType,
     getTaxSolution,
@@ -63,6 +68,12 @@ const mapDispatchToProps = {
 }
 
 class ConnectedResourceList extends Component {
+
+    constructor(props) {
+      super(props);
+    
+      this.clickHandler = this.clickHandler.bind(this);
+    }
 
     componentDidMount() {
         const { 
@@ -82,6 +93,13 @@ class ConnectedResourceList extends Component {
         getTermsSolution();
     }
 
+    clickHandler = event => {
+        const { getPosts } = this.props;
+        let selected = event.selected + 1;
+
+        getPosts(selected);
+    }
+
     render() {
 
         const { 
@@ -90,11 +108,13 @@ class ConnectedResourceList extends Component {
             taxSolutions,
             termsIndustry,
             termsResourceType,
-            termsSolutions
+            termsSolutions,
+            totalPosts
          } = this.props;
 
+        // Add elements to this as needed but keep .react-enclosure and the components as they are essential
     	return(
-            <div className="resource-center-container">
+            <div className="resource-center-container react-enclosure">
                 <Filter taxonomy={taxIndustry} terms={termsIndustry} />
 
                 <Filter taxonomy={taxResourceType} terms={termsResourceType} />
@@ -102,6 +122,16 @@ class ConnectedResourceList extends Component {
                 <Filter taxonomy={taxSolutions} terms={termsSolutions} />
 
                 <Posts />
+
+                <ReactPaginate 
+                    activeClassName={'active'}
+                    containerClassName={'pagination'}
+                    marginPagesDisplayed={1}
+                    onPageChange={this.clickHandler}
+                    PageCount={totalPosts}
+                    pageRangeDisplayed={4}
+                    subContainerClassName={'pages pagination'}
+                />
             </div>
     	)
     }

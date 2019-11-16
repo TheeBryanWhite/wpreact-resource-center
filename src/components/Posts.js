@@ -30,17 +30,16 @@ class ConnectedPosts extends Component {
 
     componentDidMount() {
         const { 
-            getPosts,
+            getPosts
         } = this.props;
-
 
         getPosts();
     }
 
     shouldComponentRender() {
 
-        const { 
-            postsLoading,
+        const {
+            postsLoading
         } = this.props;
         
         if (postsLoading === false) {
@@ -67,10 +66,12 @@ class ConnectedPosts extends Component {
             postsData.push(posts[key]);
         }
 
+        // Show a loading status if we're still waiting on a response from the API
         if (this.shouldComponentRender()) {
             return "Loading...";
         }
 
+        // Output if there are no posts to display
         if (postsData.length === 0) {
             return "There are no posts";
         }
@@ -88,6 +89,7 @@ class ConnectedPosts extends Component {
                     <div className="post-excerpt" dangerouslySetInnerHTML={this.createMarkup(el.excerpt.rendered)} />
                 </div>
                 ))}
+                
             </div>
 		)
 	}

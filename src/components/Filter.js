@@ -21,7 +21,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => {
     return {
         filterUpdate: (params) => dispatch(filterUpdate(params)),
-        getPosts: (filters) => dispatch(getPosts(filters))
+        getPosts: (pageNum, filters) => dispatch(getPosts(pageNum, filters))
     }
 };
 
@@ -46,14 +46,14 @@ class ConnectedFilter extends Component {
     	};
 
     	const filterUpdatePromise = new Promise((resolve, reject) => {
-    		this.props.filterUpdate(paramsToSend);
+    		this.props.filterUpdate(paramsToSend); // Updates the filter statuses in state
     		resolve(true);
     	});
 
     	// Run the filter query string format function only after the props have updated
 		filterUpdatePromise.then(() => {
-			const filterQs = this.formatNewFilterQuery();
-			this.props.getPosts(filterQs);
+			const filterQs = this.formatNewFilterQuery(); // Fires off the function to format the filter statuses
+			this.props.getPosts("1", filterQs); // Submits the string created above the endpoint
 		});
     }
 

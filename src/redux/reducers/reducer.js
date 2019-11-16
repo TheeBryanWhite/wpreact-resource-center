@@ -46,7 +46,9 @@ const initialState = {
 	termsResourceType: [],
 	taxIndustry: [],
 	taxSolutions: [],
-	taxResourceType: []
+	taxResourceType: [],
+	totalPages: 0,
+	totalPosts: 0
 };
 
 
@@ -73,7 +75,6 @@ function rootReducer(state = initialState, action) {
 				selectedTaxonomies: state.selectedTaxonomies.filter(item => item.term !== action.payload.termId)
 	        }
 
-
 		case GET_POSTS_FAILURE:
 			
 			return {
@@ -95,7 +96,9 @@ function rootReducer(state = initialState, action) {
 				...state,
 				loading: false,
 				error: null,
-				posts: action.payload
+				posts: action.payload.response.data,
+				totalPages: action.payload.response.headers['x-wp-totalpages'],
+				totalPosts: action.payload.response.headers['x-wp-total'],
 	        }
 
 	    case GET_INDUSTRY_FAILURE:
@@ -249,6 +252,9 @@ function rootReducer(state = initialState, action) {
 }
 
 export const filterStatus = state => state.selectedTaxonomies;
+
+export const totalPages = state => state.totalPages;
+export const totalPosts = state => state.totalPosts;
 
 export const getPostsSuccess = state => state.posts;
 export const getPostsStarted = state => state.loading;

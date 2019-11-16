@@ -25,7 +25,10 @@ import {
 	GET_SOLUTIONS_TERMS_STARTED,
 	GET_SOLUTIONS_TERMS_SUCCESS
 } from "../../constants/constants";
-import { wpApi } from "../../api/wordpress";
+import { 
+	perPage,
+	wpApi 
+} from "../../api/wordpress";
 
 /**
 /* We run our actions in threes from a core action function
@@ -45,12 +48,16 @@ import { wpApi } from "../../api/wordpress";
 /* constants file and include them in the imports block above
 /* 
 **/
-export const getPosts = filterQs => {
+
+// WP limits how many posts it serves from the API, so we have to get sneaky in order to get all of them
+// First, find out how many pages of post there are
+export const getPosts = (pageNum = "1", filterQs) => {
 	return dispatch => {
-		let apiUrl = wpApi.listPosts;
+		let apiUrl = wpApi.listPosts + "&per_page=" + perPage + "&page=" + pageNum;
 
 		if (filterQs) {
 			apiUrl += "&" + filterQs;
+
 		}
 
 		// Actually get the posts
@@ -58,7 +65,7 @@ export const getPosts = filterQs => {
 
 		axios.get(`${apiUrl}`)
 			.then(response => {
-				dispatch(getPostsSuccess(response.data));
+				dispatch(getPostsSuccess(response));
 			})
 			.catch(error => {
 				dispatch(getPostsFailure(error.message));
@@ -70,9 +77,9 @@ const getPostsStarted = () => ({
 	type: GET_POSTS_STARTED
 });
 
-const getPostsSuccess = posts => ({
+const getPostsSuccess = response => ({
 	type: GET_POSTS_SUCCESS,
-	payload: { ...posts }
+	payload: { response }
 });
 
 const getPostsFailure = error => ({

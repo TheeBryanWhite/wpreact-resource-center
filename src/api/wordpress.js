@@ -12,7 +12,7 @@ import {
 /* otherwise, the API response will omit that data
 **/
 export const wpApi = {
-	listPosts: API_URL + 'cpt_5?_embed=1',
+	listPosts: API_URL + 'cpt_5?_embed',
 	termsResourceType: API_URL + 'all-terms?term=tax_11',
 	termsIndustry: API_URL + 'all-terms?term=tax_8',
 	termsSolution: API_URL + 'all-terms?term=tax_14',
@@ -20,3 +20,5 @@ export const wpApi = {
 	taxIndustry: API_URL + 'taxonomies/tax_8',
 	taxSolution: API_URL + 'taxonomies/tax_14'
 }
+
+export const perPage = 18;
